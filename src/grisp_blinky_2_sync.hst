@@ -1,0 +1,28 @@
+resource LED1
+resource LED2
+
+def main : SF (LED1 U LED2) () ((), ()) = rate# 5.0 foo
+
+def foo : SF (LED1 U LED2) () ((), ())
+   =     read2leds
+   :>>>: (mapSignal# flip2)
+   :>>>: write2leds
+
+def read2leds : SF (LED1 U LED2) () (Int, Int)
+  =     readColor# ledposition1 : SF LED1 () Int
+    &&& readColor# ledposition2 : SF LED2 () Int
+
+def write2leds : SF (LED1 U LED2) (Int, Int) ((), ())
+  =     writeColor# ledposition1 : SF LED1 Int ()
+    *** writeColor# ledposition2 : SF LED2 Int ()
+
+def flip2 ((s1:Int), (s2:Int)) : (Int, Int) = (flip s1, flip s2)
+
+def flip (current:Int) : Int =
+  if current == 0
+  then 1
+  else 0
+
+def ledposition1 : Int = 1
+
+def ledposition2 : Int = 2
