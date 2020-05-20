@@ -1,0 +1,122 @@
+module 'robot' ['start'/2, 'stop'/1]
+    attributes ['file' = [{[114|[111|[98|[111|[116|[46|[101|[114|[108]]]]]]]]],
+                           1}],
+                'behavior' = ['application']]
+'write2leds'/0 =
+    fun() -> '__closure_13'/1
+'read2leds'/0 =
+    fun() -> '__closure_7'/0
+'ledposition2'/0 =
+    fun() -> 2
+'ledposition1'/0 =
+    fun() -> 1
+'foo'/0 =
+    fun() -> '__closure_1'/0
+'flip2'/1 =
+    fun(Hailstorm_desugar_0) ->
+        let <S1> = let <_0> = 'fst#'/1
+                   in apply _0(Hailstorm_desugar_0)
+        in let <S2> = let <_1> = 'snd#'/1
+                      in apply _1(Hailstorm_desugar_0)
+           in {let <_2> = 'flip'/1
+               in apply _2(S1),
+               let <_3> = 'flip'/1
+               in apply _3(S2)}
+'flip'/1 =
+    fun(Current) ->
+        case <> of
+            <> when call 'erlang':'=:=' (Current, 0) ->
+                1
+            <> when 'true' ->
+                0
+        end
+'__closure_13'/1 =
+    fun(__temp_12) ->
+        {let <_1> = '__closure_9'/1
+         in apply _1(let <_0> = 'fst#'/1
+                     in apply _0(__temp_12)),
+         let <_3> = '__closure_11'/1
+         in apply _3(let <_2> = 'snd#'/1
+                     in apply _2(__temp_12))}
+'__closure_11'/1 =
+    fun(__temp_10) ->
+        call 'ioutils':'writecolor'
+        (let <_0> = 'ledposition2'/0
+         in apply _0(),
+         __temp_10)
+'__closure_9'/1 =
+    fun(__temp_8) ->
+        call 'ioutils':'writecolor'
+        (let <_0> = 'ledposition1'/0
+         in apply _0(),
+         __temp_8)
+'__closure_7'/0 =
+    fun() ->
+        {let <_0> = '__closure_3'/0
+         in apply _0(),
+         let <_1> = '__closure_5'/0
+         in apply _1()}
+'__closure_5'/0 =
+    fun() ->
+        call 'ioutils':'readcolor'
+        (let <_0> = 'ledposition2'/0
+         in apply _0())
+'__closure_3'/0 =
+    fun() ->
+        call 'ioutils':'readcolor'
+        (let <_0> = 'ledposition1'/0
+         in apply _0())
+'__closure_1'/0 =
+    fun() ->
+        let <_4> = let <_0> = 'write2leds'/0
+                   in apply _0()
+        in apply _4(let <_3> = 'flip2'/1
+                    in apply _3(let <_2> = let <_1> = 'read2leds'/0
+                                           in apply _1()
+                                in apply _2()))
+'fst#'/1 =
+    fun(_0) ->
+        case _0 of
+            <{X, _2}> when 'true' ->
+                X
+            (<_1> when 'true' ->
+                 (primop 'match_fail'({'function_clause', _1})
+                  -| [{'function_name', {'fst#', 1}}])
+             -| ['compiler_generated'])
+        end
+'snd#'/1 =
+    fun(_0) ->
+        case _0 of
+            <{_2, X}> when 'true' ->
+                X
+            (<_1> when 'true' ->
+                 (primop 'match_fail'({'function_clause', _1})
+                  -| [{'function_name', {'snd#', 1}}])
+             -| ['compiler_generated'])
+        end
+'main'/0 =
+    fun() ->
+        letrec '_2'/0 =
+                   fun() ->
+                       let <_2> = '_2'/0
+                       in let <_3> = do
+                                     call 'timer':'sleep'
+                                     (call 'erlang':'trunc' (call 'erlang':'*' (5.0, 1000)))
+                                     let <_1> = let <_0> = 'foo'/0
+                                                in apply _0()
+                                     in apply _1()
+                          in apply _2()
+        in
+        apply '_2'/0()
+'start'/2 =
+    fun(_0, _1) ->
+        case call 'robot_sup':'start_link' () of
+            <_@r0 = {'ok', Supervisor}> when 'true' ->
+                do apply 'main'/0() _@r0
+            (<_2> when 'true' ->
+                 primop 'match_fail'({'badmatch', _2})
+             -| ['compiler_generated'])
+        end
+'stop'/1 =
+    fun(_0) -> 'ok'
+end
